@@ -1,0 +1,22 @@
+{
+    "name": "Liga Magic Deck Planner",
+    "version": "1.0",
+    "manifest_version": 3,
+    "description": "Liga Magic Deck Planner",
+    "background": {
+        "service_worker": "background.js"
+    },
+    "permissions": [
+        "tabs", "scripting"
+    ],
+    "host_permissions":  [
+        "http://*.ligamagic.com.br/*",
+        "http://*.ligamagic.com/*",
+        "http://ligamagic.com.br/*",
+        "http://ligamagic.com/*",
+        "https://*.ligamagic.com.br/*",
+        "https://*.ligamagic.com/*",
+        "https://ligamagic.com.br/*",
+        "https://ligamagic.com/*"
+    ]
+}
