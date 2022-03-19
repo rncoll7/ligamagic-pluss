@@ -1,8 +1,8 @@
-function onInstall(){
+async function onInstall(){
 	if(document.querySelector('td.deck-check') !== null) return;
 	document.querySelectorAll('td.deck-card').forEach(function(el){
-		var url = el.firstChild.getAttribute('href');
-		var uri = url.replace(/^.*card=([^&]+).*$/, '$1');
+		var url = el.firstChild.getAttribute('data-tooltip');
+		var uri = url.replace(/^sticky_(\d+)_-1$/, '$1');
 		var td = document.createElement('td');
 		td.classList.add('deck-check');
 		var input = document.createElement("input");
@@ -12,9 +12,10 @@ function onInstall(){
 		td.prepend(input);
 		el.parentNode.prepend(td);
 	});
+	materialize();
 }
 
-function checkUpdate(event){
+async function checkUpdate(event){
     var uri = event.target.getAttribute('name');
     document.querySelectorAll(`td.deck-check > input[name="${uri}"]`).forEach(function(input){
         input.checked = event.target.checked;
@@ -22,36 +23,38 @@ function checkUpdate(event){
     dematerialize();
 }
 
-function getOwned(){
+async function getOwned(){
 	var params = new URLSearchParams(window.location.search);
 	return params.get('owned');
 }
 
-function updateOwned(owned){
+async function updateOwned(owned){
 	var params = new URLSearchParams(window.location.search);
 	params.set('owned', owned);
 	window.history.replaceState({}, '', `${window.location.origin}?${params}`);
 }
 
-function dematerialize(){
+async function dematerialize(){
 	var cards = [];
 	document.querySelectorAll('td.deck-check > input:checked').forEach(function(input){
 		var name = input.getAttribute('name');
 		if(!cards.includes(name)){
-			cards.push(name);	
+			cards.push(name);
 		}
 	});
-	var owned = btoa(JSON.stringify(cards));
+	const joined = cards.join(',');
+	const owned = btoa(joined);
 	updateOwned(owned);
 }
 
-function materialize(){
-	var owned = getOwned();
-	var cards = JSON.parse(atob(owned));
+async function materialize(){
+	var owned = await getOwned();
+	const joined = atob(owned);
+	var cards = joined.split(',');
 	document.querySelectorAll('td.deck-check > input').forEach(function(input){
 		var name = input.getAttribute('name');
 		input.checked = cards.includes(name);
 	});
 }
+
 onInstall();
-materialize();
