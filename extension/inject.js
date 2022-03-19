@@ -31,6 +31,7 @@ if(!window.mtgp_inject_loaded){
 		el.classList.remove('box-margin-t');
 		el.firstElementChild.classList.add('box-margin-t');
 		
+		el.prepend(createBox('Obsevações', 'deck-observations'));
 		el.prepend(createBox('Não Selecionadas', 'deck-not_selected'));
 		el.prepend(createBox('Selecionadas', 'deck-selected'));
 	}
@@ -55,7 +56,7 @@ if(!window.mtgp_inject_loaded){
 		div.append(box);
 	
 		const textarea = document.createElement('textarea');
-		textarea.style['min-height'] = '200px';
+		textarea.style.height = '200px';
 		textarea.style.width  = '100%';
 		box.append(textarea);
 		
@@ -154,6 +155,28 @@ if(!window.mtgp_inject_loaded){
 			input.checked = cards.includes(name);
 		});
 	}
+
+	
+	let lastQuery='';
+	let canQuery=true;
+	async function query(card){
+		if(!canQuery) return;
+		lastQuery = card;
+		canQuery = false;
+		setTimeout(function(){ canQuery=true; }, 2000);
+		const response = await fetch(`https://ac.ligamagic.com.br/ajax/cardsearch.php?maintype=1&query=${card}`);
+		if(response.status == 200 && lastQuery == card){
+			const text = await response.text();
+			try{
+				return text.replace(/^.*suggestions:\['(.*)\'],data.*$/, '$1').split(/'.'/);
+			}catch(e){
+				return [];
+			}
+			
+		}
+		return [];
+	}
+	//http://jsfiddle.net/eMwKd/4/
 
 	onInstall();
 }
