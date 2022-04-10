@@ -1,0 +1,10 @@
+{
+  "name": "ligamagic-pluss",
+  "version": "0.2.1-alpha",
+  "repository": "git@github.com:rncoll7/ligamagic-pluss.git",
+  "author": "renan <rncoll7@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/chrome": "^0.0.180"
+  }
+}
