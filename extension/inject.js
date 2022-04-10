@@ -4,6 +4,7 @@ if(!window.mtgp_inject_loaded){
 		await createCheckBoxes();
 		await createTextBoxes();
 		await materialize();
+		await dematerialize();
 		getNames();
 	}
 	
@@ -142,7 +143,8 @@ if(!window.mtgp_inject_loaded){
 	}
 
 	async function updateSelectedStorage(selected){
-		localStorage.setItem(await getDeckName(), selected);
+		if(selected)
+			localStorage.setItem(await getDeckName(), selected);
 	}
 
 	async function dematerialize(){
@@ -155,11 +157,14 @@ if(!window.mtgp_inject_loaded){
 		});
 		const joined = cards.join(',');
 		const selected = btoa(joined);
+		updateSelectedStorage(selected);
 		updateSelectedParam(selected);
 	}
 	
 	async function materialize(){
-		const selected = await getSelectedParam();
+		let selected = await getSelectedParam();
+		if (!selected) selected = await getSelectedStorage();
+		if (!selected) return;
 		const joined = atob(selected);
 		const cards = joined.split(',');
 		document.querySelectorAll('td.deck-check > input').forEach(function(input){
