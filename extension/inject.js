@@ -23,8 +23,6 @@ if(!window.mtgp_inject_loaded){
 			el.parentNode.prepend(td);
 		});
 	}
-
-
 	
 	async function createTextBoxes(){
 		if(document.querySelector('.dk-graph-inject') !== null) return;
@@ -63,7 +61,7 @@ if(!window.mtgp_inject_loaded){
 		buyList.classList.add('buy_list');
 		buyList.textContent = 'Comprar';
 		box.append(buyList);
-		
+
 		return div;
 	}
 	
@@ -130,6 +128,11 @@ if(!window.mtgp_inject_loaded){
 		return document.querySelector('.title>span').textContent;
 	}
 
+	async function getDeckId(){
+		const params = new URLSearchParams(window.location.search);
+		return params.get('id');
+	}
+
 	async function getSelectedParam(){
 		const params = new URLSearchParams(window.location.search);
 		return params.get('selected');
@@ -150,7 +153,7 @@ if(!window.mtgp_inject_loaded){
 			localStorage.setItem(await getDeckName(), selected);
 	}
 
-	async function dematerialize(){
+	async function getCards(){
 		const cards = [];
 		document.querySelectorAll('td.deck-check > input:checked').forEach(function(input){
 			const name = input.getAttribute('name');
@@ -158,6 +161,18 @@ if(!window.mtgp_inject_loaded){
 				cards.push(name);
 			}
 		});
+		return cards;
+	}
+
+	async function setCards(cards){
+		document.querySelectorAll('td.deck-check > input').forEach(function(input){
+			const name = input.getAttribute('name');
+			input.checked = cards.includes(name);
+		});
+	}
+
+	async function dematerialize(){
+		const cards = await getCards();
 		const joined = cards.join(',');
 		const selected = btoa(joined);
 		updateSelectedStorage(selected);
@@ -170,10 +185,7 @@ if(!window.mtgp_inject_loaded){
 		if (!selected) return;
 		const joined = atob(selected);
 		const cards = joined.split(',');
-		document.querySelectorAll('td.deck-check > input').forEach(function(input){
-			const name = input.getAttribute('name');
-			input.checked = cards.includes(name);
-		});
+		await setCards(cards);
 	}
 
 	
