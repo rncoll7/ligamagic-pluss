@@ -1,0 +1,28 @@
+.buy_list {
+    float: right;
+    background-color: #22b14c;
+    border-color: #22b14c;
+    color: #fff;
+    border-radius: 3px;
+    margin-right: 5px;
+    font-size: 11px;
+    padding: 6px 9px;
+    cursor: pointer;
+    margin-top: 2px;
+}
+
+.buy_list:hover {
+    background-color: #1b9f42;
+    border-color: #1b9f42;
+}
+
+.box-interna textarea {
+    min-height: 80px;
+    height: 200px;
+    width: 100%;
+}
+
+.box-interna>div {
+    margin: 0 auto;
+    overflow: hidden;
+}

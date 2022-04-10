@@ -23,6 +23,8 @@ if(!window.mtgp_inject_loaded){
 			el.parentNode.prepend(td);
 		});
 	}
+
+
 	
 	async function createTextBoxes(){
 		if(document.querySelector('.dk-graph-inject') !== null) return;
@@ -52,14 +54,15 @@ if(!window.mtgp_inject_loaded){
 	
 		const box = document.createElement('div');
 		box.id = id;
-		box.style.margin = '0px auto';
-		box.style.overflow = 'hidden';
 		div.append(box);
 	
 		const textarea = document.createElement('textarea');
-		textarea.style.height = '200px';
-		textarea.style.width  = '100%';
 		box.append(textarea);
+
+		const buyList = document.createElement('div');
+		buyList.classList.add('buy_list');
+		buyList.textContent = 'Comprar';
+		box.append(buyList);
 		
 		return div;
 	}
