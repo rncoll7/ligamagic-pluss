@@ -121,12 +121,16 @@ if(!window.mtgp_inject_loaded){
 		dematerialize();
 		getNames();
 	}
-	
+
+	async function getDeckName(){
+		return document.querySelector('.title>span').textContent;
+	}
+
 	async function getSelectedParam(){
 		const params = new URLSearchParams(window.location.search);
 		return params.get('selected');
 	}
-	
+
 	async function updateSelectedParam(selected){
 		const params = new URLSearchParams(window.location.search);
 		params.set('selected', selected);
