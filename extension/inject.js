@@ -57,10 +57,10 @@ if(!window.mtgp_inject_loaded){
 		const textarea = document.createElement('textarea');
 		box.append(textarea);
 
-		const buyList = document.createElement('div');
-		buyList.classList.add('buy_list');
-		buyList.textContent = 'Comprar';
-		box.append(buyList);
+		// const buyList = document.createElement('div');
+		// buyList.classList.add('buy_list');
+		// buyList.textContent = 'Comprar';
+		// box.append(buyList);
 
 		return div;
 	}
