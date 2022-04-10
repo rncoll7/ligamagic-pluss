@@ -69,7 +69,7 @@ if(!window.mtgp_inject_loaded){
 		let last_key = -1;
 	
 		document.querySelectorAll('#deck-view>div:first-child tr').forEach(function(el){
-			if(el.childNodes.length == 1) {
+			if(el.childNodes.length === 1) {
 				const title = el.firstElementChild;
 				if(title.classList.contains('deck-type')){
 					let text = title.textContent.trim();
@@ -91,7 +91,7 @@ if(!window.mtgp_inject_loaded){
 				}
 			} else {
 				console.warn(el.textContent, el);	
-			};
+			}
 		
 		});
 		
@@ -177,10 +177,10 @@ if(!window.mtgp_inject_loaded){
 		canQuery = false;
 		setTimeout(function(){ canQuery=true; }, 2000);
 		const response = await fetch(`https://ac.ligamagic.com.br/ajax/cardsearch.php?maintype=1&query=${card}`);
-		if(response.status == 200 && lastQuery == card){
+		if(response.status === 200 && lastQuery === card){
 			const text = await response.text();
 			try{
-				return text.replace(/^.*suggestions:\['(.*)\'],data.*$/, '$1').split(/'.'/);
+				return text.replace(/^.*suggestions:\['(.*)'],data.*$/, '$1').split(/'.'/);
 			}catch(e){
 				return [];
 			}
