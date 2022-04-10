@@ -136,7 +136,15 @@ if(!window.mtgp_inject_loaded){
 		params.set('selected', selected);
 		window.history.replaceState({}, '', `${window.location.origin}?${params}`);
 	}
-	
+
+	async function getSelectedStorage(){
+		return localStorage.getItem(await getDeckName());
+	}
+
+	async function updateSelectedStorage(selected){
+		localStorage.setItem(await getDeckName(), selected);
+	}
+
 	async function dematerialize(){
 		const cards = [];
 		document.querySelectorAll('td.deck-check > input:checked').forEach(function(input){
