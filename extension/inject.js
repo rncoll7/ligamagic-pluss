@@ -122,14 +122,14 @@ if(!window.mtgp_inject_loaded){
 		getNames();
 	}
 	
-	async function getOwned(){
+	async function getSelectedParam(){
 		const params = new URLSearchParams(window.location.search);
-		return params.get('owned');
+		return params.get('selected');
 	}
 	
-	async function updateOwned(owned){
+	async function updateSelectedParam(selected){
 		const params = new URLSearchParams(window.location.search);
-		params.set('owned', owned);
+		params.set('selected', selected);
 		window.history.replaceState({}, '', `${window.location.origin}?${params}`);
 	}
 	
@@ -142,13 +142,13 @@ if(!window.mtgp_inject_loaded){
 			}
 		});
 		const joined = cards.join(',');
-		const owned = btoa(joined);
-		updateOwned(owned);
+		const selected = btoa(joined);
+		updateSelectedParam(selected);
 	}
 	
 	async function materialize(){
-		const owned = await getOwned();
-		const joined = atob(owned);
+		const selected = await getSelectedParam();
+		const joined = atob(selected);
 		const cards = joined.split(',');
 		document.querySelectorAll('td.deck-check > input').forEach(function(input){
 			const name = input.getAttribute('name');
