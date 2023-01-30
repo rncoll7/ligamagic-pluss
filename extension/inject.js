@@ -11,7 +11,7 @@ if(!window.mtgp_inject_loaded){
 	async function createCheckBoxes(){
 		if(document.querySelector('td.deck-check') !== null) return;
 		document.querySelectorAll('td.deck-card').forEach(function(el){
-			const url = el.firstChild.getAttribute('data-tooltip');
+			const url = el.querySelector('a').getAttribute('data-tooltip');
 			const uri = url.replace(/^sticky_(\d+)_-1$/, '$1');
 			const td = document.createElement('td');
 			td.classList.add('deck-check');
@@ -27,7 +27,7 @@ if(!window.mtgp_inject_loaded){
 	async function createTextBoxes(){
 		if(document.querySelector('.dk-graph-inject') !== null) return;
 	
-		const el = document.querySelector('.dk-graph');
+		const el = document.querySelector('.dk-graph');      
 		el.classList.add('dk-graph-inject');
 		el.classList.remove('box-margin-t');
 		el.firstElementChild.classList.add('box-margin-t');
